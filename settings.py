@@ -4,5 +4,5 @@ class Setttings:
         """Inicia as configurações do jogo"""
         # Configurações da tela
         self.screen_width = 1200
-        self.screen_hidth = 800
+        self.screen_hidth = 700
         self.bg_color = (100, 230, 220)
