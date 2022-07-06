@@ -20,18 +20,26 @@ class AlienInvasion:
     def run_game(self):
         """Inicia o looping principal do jogo"""
         while True:
-            """Verifica o teclado e o mouse"""
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self._update_screen()
 
-            # preenche a cor de fundo a cada passagem pelo Loop
-            self.screen.fill(self.settings.bg_color)
 
-            self.ship.blitme()
 
-            # sempre mostra a tela mais recente
-            pygame.display.flip()
+
+    def _check_events(self):
+        """Verifica o teclado e o mouse"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+    def _update_screen(self):
+        """Carrega as imagens e mostra a tela mais recente"""
+        self.screen.fill(self.settings.bg_color)
+
+        self.ship.blitme()
+
+        pygame.display.flip()
+
 
 
 if __name__ == '__main__':
