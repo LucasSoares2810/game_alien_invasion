@@ -16,7 +16,17 @@ class Ship:
         # Inicia cada nova Nave na parte de baixo da tela
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # controle de movimento
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        """Atualiza a posição da Nave com base self.moving"""
+        if self.moving_right:
+            self.rect.x += 1
+        if self.moving_left:
+            self.rect.x -= 1
+
     def blitme(self):
         """Desenha a Nave na sua atual localização"""
         self.screen.blit(self.image, self.rect)
-
