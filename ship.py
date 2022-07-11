@@ -7,6 +7,7 @@ class Ship:
     def __init__(self, ai_game):
         """Inicia a Nave e a coloca na posição inicial"""
         self.screen = ai_game.screen
+        self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
         # Carrega a imagem e pega o rect da Nave
@@ -16,6 +17,9 @@ class Ship:
         # Inicia cada nova Nave na parte de baixo da tela
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # Armazena um valor decimal para o movimento horizontal da nave
+        self.x = float(self.rect.x)
+
         # controle de movimento
         self.moving_right = False
         self.moving_left = False
@@ -23,9 +27,11 @@ class Ship:
     def update(self):
         """Atualiza a posição da Nave com base self.moving"""
         if self.moving_right:
-            self.rect.x += 1
+            self.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= 1
+            self.x -= self.settings.ship_speed
+
+        self.rect.x = self.x
 
     def blitme(self):
         """Desenha a Nave na sua atual localização"""
