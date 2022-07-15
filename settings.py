@@ -7,3 +7,10 @@ class Setttings:
         self.screen_hidth = 700
         self.bg_color = (100, 230, 220)
         self.ship_speed = 1.5
+
+        # Configurações da munição
+        self.bullet_speed = 1.0
+        self.bullet_width = 3
+        self.bullet_height = 15
+        self.bullet_color = (60, 60, 60)
+        self.bullets_allowed = 3
