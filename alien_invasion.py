@@ -26,13 +26,10 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
 
-            # Se livrando das Munições que estão alem da tela
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
+
 
     def _check_events(self):
         """Verifica o teclado e o mouse"""
@@ -82,6 +79,16 @@ class AlienInvasion:
 
         pygame.display.flip()
 
+    def _update_bullets(self):
+        """Atualiza a posição do projétil e se livra dos projéteis que estão alem da tela"""
+
+        # Atualiza a posição
+        self.bullets.update()
+
+        # Se livrando das Munições que estão alem da tela
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
 if __name__ == '__main__':
     # Cria um instancia do jogo e inicia ele
