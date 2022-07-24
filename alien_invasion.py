@@ -73,9 +73,24 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
 
     def _create_fleet(self):
-        """Cria uma frota de naves aliens"""
-        # Cria um alien
+        """Criando uma frota de naves aliens"""
+        # Criando um alien e encontrando quantos aliens cabem na tela
+        # O espaço entre os alien é igual a um alien
         alien = Alien(self)
+        alien_width = alien.rect.width
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        numbers_aliens_x = available_space_x // (2 * alien_width)
+
+        # Criando a primeira fila de aliens
+        for alien_number in range(numbers_aliens_x):
+            self._create_alien(alien_number)
+
+    def _create_alien(self, alien_number):
+        """ Criando um alien e inserindo na fila"""
+        alien = Alien(self)
+        alien_width = alien.rect.width
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
         self.aliens.add(alien)
 
     def _update_screen(self):
@@ -101,6 +116,9 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+
+
 
 if __name__ == '__main__':
     # Cria um instancia do jogo e inicia ele
