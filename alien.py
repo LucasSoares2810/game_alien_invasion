@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Alien(Sprite):
     """Essa classe representa uma unica Nave Alienigena de uma frota"""
 

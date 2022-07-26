@@ -4,7 +4,7 @@ class Setttings:
         """Inicia as configurações do jogo"""
         # Configurações da tela
         self.screen_width = 1200
-        self.screen_hidth = 700
+        self.screen_height = 900
         self.bg_color = (100, 230, 220)
         self.ship_speed = 1.5
 
