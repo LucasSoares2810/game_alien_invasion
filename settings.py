@@ -14,3 +14,10 @@ class Setttings:
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
+
+        # Configurações das naves aliens
+        self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
+
+        # fleet_direction onde 1 representa ir para direita e -1 representa ir para esquerda
+        self.fleet_direction = 1

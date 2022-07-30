@@ -31,6 +31,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -98,6 +99,20 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
+    def _check_fleet_edges(self):
+        """Responde se o alien alcançou a borda da tela"""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+            break
+
+    def _change_fleet_direction(self):
+        """Faz a fronta inteira descer e muda a direção"""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+
+        self.settings.fleet_direction *= -1
+
     def _update_screen(self):
         """Carrega as imagens e mostra a tela mais recente"""
         self.screen.fill(self.settings.bg_color)
@@ -110,6 +125,11 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
 
         pygame.display.flip()
+
+    def _update_aliens(self):
+        """ Checa de se frota atingiu a borda e então atualiza a posição de todos os aliens da frota"""
+        self._check_fleet_edges()
+        self.aliens.update()
 
     def _update_bullets(self):
         """Atualiza a posição do projétil e se livra dos projéteis que estão alem da tela"""
