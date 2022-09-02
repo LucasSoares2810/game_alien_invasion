@@ -1,6 +1,8 @@
 import sys
+from time import sleep
 import pygame
 from settings import Setttings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -18,6 +20,9 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_hidth = self.screen.get_rect().height
         pygame.display.set_caption("Invasão Alien")
+
+        # Cria uma instãncia para armazenar as estatísticas do jogo
+        self.stats = Ship(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -131,6 +136,10 @@ class AlienInvasion:
         self._check_fleet_edges()
         self.aliens.update()
 
+        # Monitora a colisão entre alien e nave
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self._ship_hit()
+
     def _update_bullets(self):
         """Atualiza a posição do projétil e se livra dos projéteis que estão alem da tela"""
 
@@ -142,10 +151,34 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        # Chegando se os projéteis atingiram os aliens, e fazendo eles desaparecer
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """Respondendo as colisões entre projétil e alien"""
+        # Removendo projétil e nave que colidiram
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
+        if not self.aliens:
+            # Destruindo os projéteis e criando uma nova frota
+            self.bullets.empty()
+            self._create_fleet()
 
+    def _ship_hit(self):
+        """Respondendo a colisão entre alien e nave"""
+
+        # Diminuindo ship_left
+        self.stats.ships_left -= 1
+
+        # Se livrando das alien e projéteis remanescentes
+        self.aliens.empty()
+        self.bullets.empty()
+
+        # Criando a nova frota e centralizando a nave
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Pausa
+        sleep(0.5)
 
 if __name__ == '__main__':
     # Cria um instancia do jogo e inicia ele
